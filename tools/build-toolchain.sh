@@ -85,7 +85,7 @@ load_target_conf()
 		GCC_VERSION=gcc-4.7.4
 
 		target_binutils_conf=""
-		target_gcc_conf="--with-cpu=arm9tdmi --enable-obsolete"
+		target_gcc_conf="--with-float=soft --enable-obsolete"
 		;;
 	*)
 		usage "Target $optarg not supported."
