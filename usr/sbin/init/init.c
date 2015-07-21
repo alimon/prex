@@ -87,7 +87,7 @@ main(int argc, char *argv[])
 		dup(0);			/* stderr */
 
 		sys_log("init: running boot script\n");
-		execl(cmdbox, sh, runcom);
+		execl(cmdbox, sh, runcom,NULL);
 		sys_panic("init: no shell");
 	}
 
