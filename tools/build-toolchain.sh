@@ -104,33 +104,33 @@ fi
 load_target_conf
 
 target_tmp="$BASE_TMP/$target"
-mkdir -p $target_tmp
-cd $target_tmp
+mkdir -p $target_tmp || exit 1
+cd $target_tmp || exit 1
 
 echo "Building $BINUTILS_VERSION ..."
 if [ ! -f $BINUTILS_FILE ]; then
-	wget -c $BINUTILS_SOURCE -O $BINUTILS_FILE
+	wget -c $BINUTILS_SOURCE -O $BINUTILS_FILE || exit 1
 fi
-tar -xjf $BINUTILS_FILE -C $target_tmp
+tar -xjf $BINUTILS_FILE -C $target_tmp || exit 1
 binutils_build="$target_tmp/binutils_build"
-mkdir -p $binutils_build
-cd $binutils_build
+mkdir -p $binutils_build || exit 1
+cd $binutils_build || exit 1
 ../$BINUTILS_VERSION/configure --target="$target" --prefix="$prefix" --with-sysroot --disable-nls \
-	--disable-werror "$target_binutils_conf"
-$MAKE
-$MAKE install
+	--disable-werror "$target_binutils_conf" || exit 1
+$MAKE || exit 1
+$MAKE install || exit 1
 
 echo "Building $GCC_VERSION ..."
 if [ ! -f $GCC_FILE ]; then
-	wget -c $GCC_SOURCE -O $GCC_FILE
+	wget -c $GCC_SOURCE -O $GCC_FILE || exit 1
 fi
-tar -xjf $GCC_FILE -C $target_tmp
+tar -xjf $GCC_FILE -C $target_tmp || exit 1
 gcc_build="$target_tmp/gcc_build"
-mkdir -p $gcc_build
-cd "$gcc_build"
+mkdir -p $gcc_build || exit 1
+cd "$gcc_build" || exit 1
 ../$GCC_VERSION/configure --target="$target" --prefix="$prefix" --enable-languages=c,c++ \
-       	--disable-nls --without-headers "$target_gcc_conf"
-$MAKE all-gcc
-$MAKE all-target-libgcc
-$MAKE install-gcc
-$MAKE install-target-libgcc
+       	--disable-nls --without-headers "$target_gcc_conf" || exit 1
+$MAKE all-gcc || exit 1
+$MAKE all-target-libgcc || exit 1
+$MAKE install-gcc || exit 1
+$MAKE install-target-libgcc || exit 1
