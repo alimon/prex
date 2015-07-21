@@ -11,14 +11,6 @@
 BASE_TMP=/tmp/prex-toolchain
 MAKE="make -j `nproc`"
 
-BINUTILS_VERSION=binutils-2.24
-BINUTILS_SOURCE="ftp://ftp.gnu.org/gnu/binutils/$BINUTILS_VERSION.tar.bz2"
-BINUTILS_FILE="$BASE_TMP/$BINUTILS_VERSION.tar.bz2"
-
-GCC_VERSION=gcc-5.2.0
-GCC_SOURCE="ftp://ftp.gnu.org/gnu/gcc/$GCC_VERSION/$GCC_VERSION.tar.bz2"
-GCC_FILE="$BASE_TMP/$GCC_VERSION.tar.bz2"
-
 usage()
 {
 	if [ -n "$*" ]; then
@@ -82,8 +74,18 @@ load_target_conf()
 {
 	case "$target" in
 	"i386-elf")
+		BINUTILS_VERSION=binutils-2.25
+		GCC_VERSION=gcc-5.2.0
+
 		target_binutils_conf=""
 		target_gcc_conf=""
+		;;
+	"arm-elf")
+		BINUTILS_VERSION=binutils-2.22
+		GCC_VERSION=gcc-4.7.4
+
+		target_binutils_conf=""
+		target_gcc_conf="--with-cpu=arm9tdmi --enable-obsolete"
 		;;
 	*)
 		usage "Target $optarg not supported."
@@ -103,6 +105,12 @@ fi
 
 load_target_conf
 
+BINUTILS_SOURCE="ftp://ftp.gnu.org/gnu/binutils/$BINUTILS_VERSION.tar.bz2"
+BINUTILS_FILE="$BASE_TMP/$BINUTILS_VERSION.tar.bz2"
+
+GCC_SOURCE="ftp://ftp.gnu.org/gnu/gcc/$GCC_VERSION/$GCC_VERSION.tar.bz2"
+GCC_FILE="$BASE_TMP/$GCC_VERSION.tar.bz2"
+
 target_tmp="$BASE_TMP/$target"
 mkdir -p $target_tmp || exit 1
 cd $target_tmp || exit 1
@@ -116,7 +124,7 @@ binutils_build="$target_tmp/binutils_build"
 mkdir -p $binutils_build || exit 1
 cd $binutils_build || exit 1
 ../$BINUTILS_VERSION/configure --target="$target" --prefix="$prefix" --with-sysroot --disable-nls \
-	--disable-werror "$target_binutils_conf" || exit 1
+	--disable-werror $target_binutils_conf || exit 1
 $MAKE || exit 1
 $MAKE install || exit 1
 
@@ -129,7 +137,7 @@ gcc_build="$target_tmp/gcc_build"
 mkdir -p $gcc_build || exit 1
 cd "$gcc_build" || exit 1
 ../$GCC_VERSION/configure --target="$target" --prefix="$prefix" --enable-languages=c,c++ \
-       	--disable-nls --without-headers "$target_gcc_conf" || exit 1
+	--disable-nls --without-headers $target_gcc_conf || exit 1
 $MAKE all-gcc || exit 1
 $MAKE all-target-libgcc || exit 1
 $MAKE install-gcc || exit 1
