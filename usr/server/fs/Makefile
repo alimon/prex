@@ -4,9 +4,11 @@ PROG:=		fs
 SUBDIR:=	vfs
 OBJS:=		vfs/vfscore.o
 
-#DISASM= 	fs.lst
-#MAP= 		fs.map
-#SYMBOL= 	fs.sym
+ifeq ($(_DEBUG_),1)
+DISASM= 	fs.lst
+MAP= 		fs.map
+SYMBOL= 	fs.sym
+endif
 
 ifeq ($(CONFIG_DEVFS),y)
 SUBDIR+=	devfs

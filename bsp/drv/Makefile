@@ -2,9 +2,11 @@ include $(SRCDIR)/mk/own.mk
 
 TARGET:=	drv.ko
 
-#MAP:= 		drv.map
-#DISASM:= 	drv.lst
-#SYMBOL:= 	drv.sym
+ifeq ($(_DEBUG_),1)
+MAP:= 		drv.map
+DISASM:= 	drv.lst
+SYMBOL:= 	drv.sym
+endif
 
 _RELOC_OBJ_:=	1
 _KERNEL_:=	1

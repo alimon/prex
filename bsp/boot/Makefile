@@ -4,9 +4,11 @@ include $(SRCDIR)/mk/own.mk
 
 TARGET:=	bootldr
 
-#MAP:=		bootldr.map
-#DISASM:= 	bootldr.lst
-#SYMBOL:=	bootldr.sym
+ifeq ($(_DEBUG_),1)
+MAP:=		bootldr.map
+DISASM:= 	bootldr.lst
+SYMBOL:=	bootldr.sym
+endif
 
 _KERNEL_:=	1
 DEFS+=		KERNEL

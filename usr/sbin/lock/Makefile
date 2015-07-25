@@ -2,8 +2,10 @@ PROG:=		lock
 
 SRCS:=		lock
 
-#DISASM= 	lock.lst
-#MAP=		lock.map
-#SYMBOL= 	lock.sym
+ifeq ($(_DEBUG_),1)
+DISASM= 	lock.lst
+MAP=		lock.map
+SYMBOL= 	lock.sym
+endif
 
 include $(SRCDIR)/mk/prog.mk

@@ -4,9 +4,11 @@ include $(SRCDIR)/mk/own.mk
 
 TARGET:=	prex
 
-#MAP:=		prex.map
-#DISASM:= 	prex.lst
-#SYMBOL:= 	prex.sym
+ifeq ($(_DEBUG_),1)
+MAP:=		prex.map
+DISASM:= 	prex.lst
+SYMBOL:= 	prex.sym
+endif
 
 _KERNEL_:=	1
 DEFS+=		KERNEL

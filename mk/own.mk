@@ -2,7 +2,7 @@ ifndef _OWN_MK_
 _OWN_MK_:=	1
 
 # Build flavor
-#_DEBUG_:=	1
+_DEBUG_:=	1
 #_QUICK_:=	1
 #_STRICT_:=	1
 #_SILENT_:=	1
