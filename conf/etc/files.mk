@@ -63,6 +63,6 @@ endif
 #FILES+= 	$(SRCDIR)/usr/test/stderr/stderr
 #FILES+= 	$(SRCDIR)/usr/test/umount/umount
 
-FILES+=		$(SRCDIR)/doc/LICENSE
+FILES+=		$(SRCDIR)/LICENSE
 
 endif	# !CONFIG_POSIX
