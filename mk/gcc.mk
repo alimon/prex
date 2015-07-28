@@ -7,7 +7,7 @@ OUTPUT_OPTION=	-o $@
 
 DEFINES=	$(addprefix -D,$(DEFS))
 
-CFLAGS+=	-c -Os -ansi -pedantic -Wall -Wundef -Wstrict-prototypes \
+CFLAGS+=	-c -ansi -pedantic -Wall -Wundef -Wstrict-prototypes \
 		-Wpointer-arith -nostdinc -fno-strict-aliasing \
 		-fno-reorder-functions -fno-unwind-tables -fno-asynchronous-unwind-tables \
 	       	$(GCCFLAGS)
@@ -16,9 +16,9 @@ ACPPFLAGS+=	-D__ASSEMBLY__
 LDFLAGS+=	-static -nostdlib $(addprefix -L,$(LIBSDIR))
 
 ifeq ($(_DEBUG_),1)
-CFLAGS+=	-fno-omit-frame-pointer -g
+CFLAGS+=	-fno-omit-frame-pointer -g3
 else
-CFLAGS+=	-fomit-frame-pointer
+CFLAGS+=	-fomit-frame-pointer -Os
 endif
 
 ifeq ($(_KERNEL_),1)
