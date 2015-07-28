@@ -76,13 +76,14 @@ load_target_conf()
 	"i386-elf")
 		BINUTILS_VERSION=binutils-2.25
 		GCC_VERSION=gcc-5.2.0
-
+		GDB_VERSION=
 		target_binutils_conf=""
 		target_gcc_conf=""
 		;;
 	"arm-elf")
 		BINUTILS_VERSION=binutils-2.22
 		GCC_VERSION=gcc-4.7.4
+		GDB_VERSION=gdb-7.9
 
 		target_binutils_conf=""
 		target_gcc_conf="--with-float=soft --enable-obsolete"
@@ -110,6 +111,9 @@ BINUTILS_FILE="$BASE_TMP/$BINUTILS_VERSION.tar.bz2"
 
 GCC_SOURCE="ftp://ftp.gnu.org/gnu/gcc/$GCC_VERSION/$GCC_VERSION.tar.bz2"
 GCC_FILE="$BASE_TMP/$GCC_VERSION.tar.bz2"
+
+GDB_SOURCE="ftp://ftp.gnu.org/gnu/gdb/$GDB_VERSION.tar.gz"
+GDB_FILE="$BASE_TMP/$GDB_VERSION.tar.gz"
 
 target_tmp="$BASE_TMP/$target"
 mkdir -p $target_tmp || exit 1
@@ -142,3 +146,18 @@ $MAKE all-gcc || exit 1
 $MAKE all-target-libgcc || exit 1
 $MAKE install-gcc || exit 1
 $MAKE install-target-libgcc || exit 1
+
+if [ ! -z "$GDB_VERSION" ]; then
+	echo "Building $GDB_VERSION ..."
+	if [ ! -f $GDB_FILE ]; then
+		wget -c $GDB_SOURCE -O $GDB_FILE || exit 1
+	fi
+
+	tar -xzf $GDB_FILE -C $target_tmp || exit 1
+	gdb_build="$target_tmp/gdb_build"
+	mkdir -p $gdb_build || exit 1
+	cd "$gdb_build" || exit 1
+	../$GDB_VERSION/configure --target="$target" --prefix="$prefix" || exit 1
+	$MAKE || exit 1
+	$MAKE install || exit 1
+fi
