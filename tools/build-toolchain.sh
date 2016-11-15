@@ -88,6 +88,14 @@ load_target_conf()
 		target_binutils_conf=""
 		target_gcc_conf="--with-float=soft --enable-obsolete"
 		;;
+	"arm-none-eabi")
+		BINUTILS_VERSION=binutils-2.25
+		GCC_VERSION=gcc-5.2.0
+		GDB_VERSION=gdb-7.12
+
+		target_binutils_conf=""
+		target_gcc_conf="--with-float=soft --enable-obsolete"
+		;;
 	*)
 		usage "Target $optarg not supported."
 		exit 1	

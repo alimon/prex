@@ -117,8 +117,9 @@ gettarget()
 		target="x86-pc"
 	fi
 
-	arch=`expr "x$target" : 'x\([^=]*\)-'`
-	platform=`expr "x$target" : 'x[^=]*-\(.*\)'`
+	arch=`expr "x$target" : 'x\([^=-]*\)'`
+	platform=`expr "x$target" : 'x[^=-]*-\(.*\)'`
+	echo "architecture $arch platform $platform"
 
 	case "$arch" in
 	x86|arm|ppc|sh|mips)
