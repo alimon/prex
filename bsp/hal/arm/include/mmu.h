@@ -36,13 +36,13 @@ typedef uint32_t	*pgd_t;		/* page directory */
 typedef uint32_t	*pte_t;		/* page table entry */
 
 #define L1TBL_SIZE	0x4000
-#define L2TBL_SIZE	0x1000
+#define L2TBL_SIZE	0x0400
 
 /*
  * Page directory entry (L1)
  */
-#define PDE_PRESENT	0x00000003
-#define PDE_ADDRESS	0xfffff000
+#define PDE_PRESENT	0x00000011
+#define PDE_ADDRESS	0xfffffc00
 
 /*
  * Page table entry (L2)
