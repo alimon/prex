@@ -62,8 +62,8 @@ ENTRY(boot_entry)
 	movw	%ax, %ds
 	xorw	%si, %si		/* Source address cs:0 */
 	movw	%si, %es
-	movw	$0x4000, %di		/* Destination */
-	movw	$0x800, %cx		/* size 8K */
+	movw	$(CONFIG_LOADER_TEXT), %di		/* Destination */
+	movw	$(CONFIG_LOADER_MAX_SIZE), %cx		/* size 8K */
 	rep	movsl
 	ljmp	$0x0000, $(reset_cs)
 reset_cs:
@@ -107,9 +107,9 @@ go_prot:
 	/*
 	 * Relocate OS image.
 	 */
-	movl	$(CONFIG_BOOTIMG_BASE - KERNBASE), %edi	/* Destination */
-	movl	$0x32000, %esi		/* Source address: 0x32000 */
-	movl	$0x1B800, %ecx		/* size 0x6e000 */
+	movl	$(CONFIG_BOOTIMG_BASE - KERNBASE ), %edi	/* Destination */
+	movl	$(CONFIG_BOOTSECT_LOAD_ADDRESS + CONFIG_LOADER_MAX_SIZE), %esi		/* Source address: 0x32000 */
+	movl	$0x1B800, %ecx		/* TODO: Calc total file size - BOOTLOADER SIZE*/
 	rep	movsl
 
 	jmp	main			/* Jump to main routine in C */

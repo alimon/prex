@@ -11,9 +11,14 @@ makeoptions	GCCFLAGS+= -mpreferred-stack-boundary=2
 #
 # Memory address
 #
-memory		LOADER_TEXT	0x00004000	# Start of boot loader
-memory		KERNEL_TEXT	0x80010000	# Start of kernel
-memory		BOOTIMG_BASE	0x80100000	# Location of boot image
+
+# BOOTSECT
+memory		BOOTSECT_LOAD_ADDRESS	0x30000	# Target address where floppy bootsector will load PREXOS file
+
+memory		LOADER_TEXT		0x00004000	# Start of boot loader
+memory		LOADER_MAX_SIZE	0x00002000  # Boot loader max size
+memory		KERNEL_TEXT 	0x80010000	# Start of kernel
+memory		BOOTIMG_BASE    0x80100000  # Location of Bootimg base
 memory		SYSPAGE_BASE	0x80000000	# Location of system page
 
 #

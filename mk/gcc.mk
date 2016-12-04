@@ -12,11 +12,12 @@ CFLAGS+=	-c -ansi -pedantic -Wall -Wundef -Wstrict-prototypes \
 		-fno-reorder-functions -fno-unwind-tables -fno-asynchronous-unwind-tables \
 	       	$(GCCFLAGS)
 CPPFLAGS+=	$(DEFINES) -I. $(addprefix -I,$(INCSDIR))
-ACPPFLAGS+=	-D__ASSEMBLY__
+ACPPFLAGS+=	-D__ASSEMBLY__ -c
 LDFLAGS+=	-static -nostdlib $(addprefix -L,$(LIBSDIR))
 
 ifeq ($(_DEBUG_),1)
-CFLAGS+=	-fno-omit-frame-pointer -g3
+CFLAGS+=	-fno-omit-frame-pointer -ggdb
+ACPPFLAGS+= -ggdb
 else
 CFLAGS+=	-fomit-frame-pointer -Os
 endif

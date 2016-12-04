@@ -60,6 +60,8 @@ relocate_rel(Elf32_Rel *rel, Elf32_Addr sym_val, char *target_sect)
 		ELFDBG(("R_ARM_PC24: %lx -> %lx\n",
 			(long)where, (long)*where));
 		break;
+	case R_ARM_V4BX:
+		break;
 	default:
 		ELFDBG(("Unkown relocation type=%d\n",
 			ELF32_R_TYPE(rel->r_info)));

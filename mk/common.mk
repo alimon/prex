@@ -77,9 +77,7 @@ endif
 
 %.o: %.S
 	$(call echo-file,AS     ,$<)
-	$(CPP) $(ACPPFLAGS) $(CPPFLAGS) $< $*.tmp
-	$(AS) $(ASFLAGS) $(OUTPUT_OPTION) $*.tmp
-	$(RM) $*.tmp
+	$(CC) $(ACPPFLAGS) $(CPPFLAGS) $(OUTPUT_OPTION) $<
 
 
 #

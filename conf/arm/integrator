@@ -11,9 +11,10 @@ makeoptions	ASFLAGS+= -mfpu=softfpa
 #
 # Memory address
 #
-memory		LOADER_TEXT	0x00010000	# Start of boot loader
-memory		KERNEL_TEXT	0x80080000	# Start of kernel
-memory		BOOTIMG_BASE	0x80012000	# Location of boot image
+memory		LOADER_TEXT		0x00010000	# Start of bootloader
+memory		LOADER_MAX_SIZE	0x00002000	# Boot loader max size
+memory		KERNEL_TEXT		0x80080000	# Start of kernel
+memory		BOOTIMG_BASE	0x80012000	# Location of Bootimg base (SYSPAGE_BASE + LOADER_TEXT + LOADER_MAX_SIZE)
 memory		SYSPAGE_BASE	0x80000000	# Location of system page
 
 #
